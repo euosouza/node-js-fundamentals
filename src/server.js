@@ -1,5 +1,5 @@
 import http from "node:http";
-import { json } from "./middleware/json.js"
+import { parseBody } from "./middleware/parseBody.js"
 import { Database } from "./database.js"
 import { routes } from "./routes.js";
 
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 const server = http.createServer(async (req, res) => {
   const { method, url } = req;
 
-  await json(req, res);
+  await parseBody(req, res);
 
   const route = routes.find(route => route.method === method && route.path.test(url));
 

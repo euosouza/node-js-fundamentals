@@ -1,4 +1,12 @@
-export async function json(req, res) {
+export async function parseBody(req, res) {
+  const contentType = req.headers['content-type'] || '';
+
+  if (contentType.includes('text/csv')) {
+    req.body = null;
+    res.setHeader('Content-Type', 'application/json');
+    return;
+  }
+
   const buffer = [];
 
   for await (const chunk of req) {
